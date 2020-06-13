@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-user-detail',
@@ -6,8 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserDetailComponent implements OnInit {
 
-  constructor() { }
+  constructor( private router: Router) {
+
+  }
 
   ngOnInit() {}
+  goBack( evt ){
+     //this.router.navigate(['users'])
+    this.router.navigateByUrl('users')
+  }
+
+
 
 }
