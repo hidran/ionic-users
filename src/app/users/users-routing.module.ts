@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: ':id/detail',
-    component: UserDetailComponent
+    loadChildren: () => import('../user-data/user-data.module').then( m => m.UserDataPageModule)
   }
 
 ];
