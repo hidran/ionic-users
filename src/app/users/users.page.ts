@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {MovieService} from "../services/movie.service";
+import {UsersService} from "../services/users.service";
 import {Observable} from "rxjs";
-import {User} from '../services/movie.service';
+import {User} from '../services/users.service';
 @Component({
   selector: 'app-users',
   templateUrl: './users.page.html',
@@ -10,11 +10,11 @@ import {User} from '../services/movie.service';
 export class UsersPage implements OnInit {
    public users$: Observable<User[]>;
 
-  constructor(private movieService: MovieService) { }
+  constructor(private userService: UsersService) { }
 
   ngOnInit() {
    // this.movieService.getUsers().subscribe(res => console.log(res[0]))
-     this.users$ =  this.movieService.getUsers();
+     this.users$ =  this.userService.getUsers();
 
 
   }

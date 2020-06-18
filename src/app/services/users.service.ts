@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {map} from "rxjs/operators";
+import {Observable} from "rxjs";
 
 export interface Name {
   title: string;
@@ -47,8 +48,8 @@ export interface Users {
 @Injectable({
   providedIn: 'root'
 })
-export class MovieService {
-   apiURL = 'https://randomuser.me/api/?results=100&inc=email,gender,name,nat,picture,dob,phone,login&noinfo';
+export class UsersService {
+   apiURL = 'https://randomuser.me/api/?seed=usersapp&results=100&inc=email,gender,name,nat,picture,dob,phone,login&noinfo';
   constructor(private http: HttpClient) {
 
   }
@@ -57,4 +58,10 @@ export class MovieService {
         map(res => res.results)
     );
   }
+  async getUserById<User>(id:string){
+      const users = await  this.getUsers().toPromise();
+      return users.filter(user => user.login.uuid === id)[0]
+
+  }
 }
+
