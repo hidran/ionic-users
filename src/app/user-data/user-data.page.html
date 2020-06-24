@@ -17,17 +17,7 @@
       </ion-card-title>
     </ion-card-header>
     <ion-card-content>
-     <ion-list>
-       <ion-list-header>User's data</ion-list-header>
-       <ion-item>
-         <ion-icon color="danger" name="call" slot="start"></ion-icon>
-         <ion-label>{{user.phone}}</ion-label>
-       </ion-item>
-       <ion-item>
-         <ion-icon color="danger" name="at-outline" slot="start"></ion-icon>
-         <ion-label>{{user.email}}</ion-label>
-       </ion-item>
-     </ion-list>
+    
       <ion-grid>
         <ion-row>
           <ion-col class="ion-text-center">
@@ -41,27 +31,22 @@
               <ion-label>{{user.phone}}</ion-label>
             </ion-item>
           </ion-col>
-          <ion-col size="2" size-md>
-            <ion-item>
-              <ion-icon color="danger" name="at-outline" slot="start"></ion-icon>
-              <ion-label>{{user.email}}</ion-label>
-            </ion-item>
-          </ion-col>
           <ion-col>
             <ion-item>
               <ion-icon color="danger" name="at-outline" slot="start"></ion-icon>
               <ion-label>{{user.email}}</ion-label>
             </ion-item>
           </ion-col>
+         
           <ion-col>
             <ion-item>
-              <ion-icon color="danger" name="at-outline" slot="start"></ion-icon>
+              <ion-icon  color="danger" name="globe-outline"  slot="start"></ion-icon>
               <ion-label>{{user.nat}}</ion-label>
             </ion-item>
           </ion-col>
-          <ion-col size="auto">
+          <ion-col>
             <ion-item>
-              <ion-icon color="danger" name="at-outline" slot="start"></ion-icon>
+              <ion-icon  color="danger" name="calendar-outline"  slot="start"></ion-icon>
               <ion-label>{{user.dob.date.toLocaleString()}}</ion-label>
             </ion-item>
           </ion-col>

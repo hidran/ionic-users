@@ -8,14 +8,13 @@ import {User} from '../services/users.service';
   styleUrls: ['./users.page.scss'],
 })
 export class UsersPage implements OnInit {
-   public users$: Observable<User[]>;
+  public users$: Promise<User[]>;
 
   constructor(private userService: UsersService) { }
 
   ngOnInit() {
    // this.movieService.getUsers().subscribe(res => console.log(res[0]))
-     this.users$ =  this.userService.getUsers();
-
+    this.users$ =  this.userService.getUsers();
 
   }
 

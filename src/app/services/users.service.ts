@@ -1,67 +1,57 @@
+import { Users, User } from './../interfaces/user-interfaces';
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
-import {Observable} from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import { map, tap } from 'rxjs/operators';
+import { Observable, from } from 'rxjs';
+import { Storage } from '@ionic/storage';
 
-export interface Name {
-  title: string;
-  first: string;
-  last: string;
-}
-
-export interface Login {
-  uuid: string;
-  username: string;
-  password: string;
-  salt: string;
-  md5: string;
-  sha1: string;
-  sha256: string;
-}
-
-export interface Dob {
-  date: Date;
-  age: number;
-}
-
-export interface Picture {
-  large: string;
-  medium: string;
-  thumbnail: string;
-}
-
-export interface User {
-  gender: string;
-  name: Name;
-  email: string;
-  login: Login;
-  dob: Dob;
-  phone: string;
-  picture: Picture;
-  nat: string;
-}
-
-export interface Users {
-  results: User[];
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
-   apiURL = 'https://randomuser.me/api/?seed=usersapp&results=100&inc=email,gender,name,nat,picture,dob,phone,login&noinfo';
-  constructor(private http: HttpClient) {
+  apiURL = 'https://randomuser.me/api/?seed=usersapp&results=100&inc=email,gender,name,nat,picture,dob,phone,login&noinfo';
+  constructor(private http: HttpClient, private storage: Storage) {
 
   }
-  getUsers() {
+
+  async getUsers() {
+    const users = await this.storage.get('users');
+    console.log(users);
+    if (users) {
+      return users;
+    }
+
     return this.http.get<Users>(this.apiURL).pipe(
-        map(res => res.results)
-    );
-  }
-  async getUserById<User>(id:string){
-      const users = await  this.getUsers().toPromise();
-      return users.filter(user => user.login.uuid === id)[0]
+      map(res => res.results),
+      tap(resUsers => {
 
+        this.storage.set('users', resUsers);
+      })
+    ).toPromise();
+  }
+  async getUserById(id: string): Promise<User> {
+
+    const usercached = await this.storage.get('user-' + id);
+    if (usercached) {
+      return usercached;
+    }
+    const users = await this.getUsers();
+    const userData = users.filter(user => user.login.uuid === id)[0];
+    if (userData) {
+      this.storage.set('user-' + id, userData);
+    }
+    return userData || [];
   }
 }
 
+const SERVERURL = 'http://localhost:3000/';
+ const albumURL = 'albums/'; 
+ const photo = 'photos/'; 
+ function getAlbum(id) { 
+   let album = fetch(SERVERURL + albumURL + id).then((res) => { 
+     return res.json(); }).then((data) => { return data; }).catch(); 
+     return album;
+     } 
+     let alb = getAlbum(1); 
+     alb.then((res) => { console.log(res); });
